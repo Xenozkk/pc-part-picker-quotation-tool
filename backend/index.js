@@ -14,23 +14,19 @@ const routerSetComputer = require('./routes/setComputer')
 
 const app = express()
 
-const allowedOrigins = [
-  'http://localhost:3000',                // สำหรับรันในเครื่อง
-  'https://your-frontend-app.vercel.app'  // <--- ใส่ลิงก์หน้าเว็บ Vue ที่ Deploy แล้วตรงนี้
-];
-
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -ZK1) {
+    // อนุญาตถ้า Origin อยู่ในรายการ หรือเป็น Request ที่ไม่มี Origin (เช่น Postman)
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
     }
   },
-  credentials: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // อนุญาต Methods ที่ใช้
+  credentials: true, // สำคัญถ้าต้องส่ง Cookie/Authorization Header
+  optionsSuccessStatus: 204,
 }
-
-app.use(cors(corsOptions))
 
 app.use(cookieParser())
 app.use(express.json())
