@@ -14,10 +14,23 @@ const routerSetComputer = require('./routes/setComputer')
 
 const app = express()
 
+const allowedOrigins = [
+  'http://localhost:3000',                // สำหรับรันในเครื่อง
+  'https://your-frontend-app.vercel.app'  // <--- ใส่ลิงก์หน้าเว็บ Vue ที่ Deploy แล้วตรงนี้
+];
+
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -ZK1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
   credentials: true,
 }
+
+app.use(cors(corsOptions))
 
 app.use(cookieParser())
 app.use(express.json())
