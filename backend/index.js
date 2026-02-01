@@ -16,7 +16,6 @@ const app = express()
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // อนุญาตถ้า Origin อยู่ในรายการ หรือเป็น Request ที่ไม่มี Origin (เช่น Postman)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true)
     } else {
@@ -24,7 +23,7 @@ const corsOptions = {
     }
   },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // อนุญาต Methods ที่ใช้
-  credentials: true, // สำคัญถ้าต้องส่ง Cookie/Authorization Header
+  credentials: true, 
   optionsSuccessStatus: 204,
 }
 
